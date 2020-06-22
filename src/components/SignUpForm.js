@@ -115,11 +115,12 @@ export default function SignUpForm() {
   return (
     <div className="form-container">
         {/* <div className='errors'>
-            <div>{errors.first_name}</div>
-            <div>{errors.last_name}</div>
-            <div>{errors.email}</div>
-            <div>{errors.password}</div>
-            <div>{errors.tos}</div>
+            <div>{formErrors.first_name}</div>
+            <div>{formErrors.last_name}</div>
+            <div>{formErrors.username}</div>
+            <div>{formErrors.email}</div>
+            <div>{formErrors.password}</div>
+            <div>{formErrors.tos}</div>
         </div> */}
         <div className='form-input'>
             <h3>Information</h3>
