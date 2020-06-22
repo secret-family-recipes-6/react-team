@@ -123,24 +123,24 @@ export default function SignUpForm() {
             <div>{formErrors.tos}</div>
         </div> */}
         <div className='form-input'>
-            <h3>Information</h3>
+            <h3>Sign Up</h3>
             <label> First Name
-                <input name='first_name' type='text' value={first_name} onChange={onInputChange} maxLength='40'/>
+                <input name='first_name' type='text' value={formValues.first_name} onChange={onInputChange} maxLength='40'/>
             </label>
             <label> Last Name
-                <input name='last_name' type='text' value={last_name} onChange={onInputChange} maxLength='40'/>
+                <input name='last_name' type='text' value={formValues.last_name} onChange={onInputChange} maxLength='40'/>
             </label>
             <label> Username
-                <input name='username' type='text' value={username} onChange={onInputChange} maxLength='20'></input>
+                <input name='username' type='text' value={formValues.username} onChange={onInputChange} maxLength='20'></input>
             </label>
             <label> Email
-                <input name='email' type='text' value={email} onChange={onInputChange}/>
+                <input name='email' type='text' value={formValues.email} onChange={onInputChange}/>
             </label>
             <label> Password
-                <input name='password' type='password' value={password} onChange={onInputChange}/>
+                <input name='password' type='password' value={formValues.password} onChange={onInputChange}/>
             </label>
             <label> Terms of Service
-                <input name='tos' type='checkbox' checked={tos} onChange={onCheckboxChange}/>
+                <input name='tos' type='checkbox' checked={formValues.tos} onChange={onCheckboxChange}/>
             </label>
             <button onClick={onSubmit} disabled={disabled}>Submit</button>
         </div>
