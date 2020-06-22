@@ -1,16 +1,9 @@
 import React from 'react';
 
 import axios from'axios';
-// import * as Yup from 'yup';
 
-const initialUser = [{
-    first_name: 'fName',
-    last_name: 'lName',
-    username: 'username',
-    email: 'email@email.com',
-    password: '1234567890',
-    tos: true,
-  }];
+    //you know
+// import * as Yup from 'yup';
 
 const initialFormValues = {
     first_name: '',
@@ -32,7 +25,6 @@ const initialFormValues = {
 
 export default function SignUpForm() {
     
-    const [users, setUsers] = useState(initialUser);
     const [formValues, setFormValues] = useState(initialFormValues);
     const [formErrors, setFormErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
@@ -41,6 +33,7 @@ export default function SignUpForm() {
     
         const { name, value } = evt.target
     
+            // For Validation later
         // Yup
         //   .reach(formSchema, name)
     
@@ -71,58 +64,51 @@ export default function SignUpForm() {
           tos: !formValues.tos
         })
       };
-    const getUsers = () => {
-        axios.get('')
-          .then(res => {
-            setUsers(res.data.data);
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      };
-    const postUsers = newUser => {
-        axios.post('', newUser)
-          .then(response => {
-            setUsers([response.data, ...users]);
-            debugger
-          })
-          .catch(err => {
-            console.log(err)
-          })
-          .finally(() => {
-            setFormValues(initialFormValues);
-          })
-      };
+
+
+      // This is my generic post request, not sure how I'll be using it yet, or if it's for you.
+    // const postUsers = newUser => {
+    //     axios.post('', newUser)
+    //       .then(response => {
+    //         setUsers([response.data, ...users]);
+    //         debugger
+    //       })
+    //       .catch(err => {
+    //         console.log(err)
+    //       })
+    //       .finally(() => {
+    //         setFormValues(initialFormValues);
+    //       })
+    //   };
       
-  const onSubmit = evt => {
-    evt.preventDefault();
 
-    const newUser = {
-      first_name: formValues.first_name.trim(),
-      last_name: formValues.last_name.trim(),
-      username: formValues.username.trim(),
-      email: formValues.email.trim(),
-      password: formValues.password,
-      tos: formValues.tos,
-    };
+    // Same thing as for the post request
+//   const onSubmit = evt => {
+//     evt.preventDefault();
 
-    setUsers(props => [newUser, ...props]);
+//     const newUser = {
+//       first_name: formValues.first_name.trim(),
+//       last_name: formValues.last_name.trim(),
+//       username: formValues.username.trim(),
+//       email: formValues.email.trim(),
+//       password: formValues.password,
+//       tos: formValues.tos,
+//     };
 
-    setFormValues(initialFormValues);
+//     setUsers(props => [newUser, ...props]);
 
-    postUsers(newUser);
-  };
+//     setFormValues(initialFormValues);
 
-  useEffect(() => {
-    getUsers()
-  }, []);
+//     postUsers(newUser);
+//   };
 
-  useEffect(() => {
+      // This is to refresh the formValues for validation later
+//   useEffect(() => {
 
-    formSchema.isValid(formValues).then(props => {
-      setDisabled(!props)
-    })
-  }, [formValues]);
+//     formSchema.isValid(formValues).then(props => {
+//       setDisabled(!props)
+//     })
+//   }, [formValues]);
 
 
 
