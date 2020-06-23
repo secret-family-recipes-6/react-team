@@ -1,3 +1,18 @@
 .App {
   text-align: center;
 }
+
+main {
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  color: white;
+  width: 75%;
+  /* orange, brown */
+  /* background-color: rgba(217, 84, 39, 0.8); */
+  background-color: rgba(110, 52, 21, 0.85);
+  border: 2px solid #703103;
+  margin: 5vh 0;
+}
