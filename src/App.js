@@ -2,20 +2,30 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 import NavBar from './components/NavBar';
 import RecipeList from './components/RecipeList';
+import SignUpForm from './components/SignUpForm';
+import SignInForm from './components/SignInForm';
 import { RecipesContext } from './contexts/RecipesContext';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/PrivateRoute';
 import RecipeDetails from './components/RecipeDetails';
 import AddRecipeForm from './components/AddRecipeForm';
 import EditRecipeForm from './components/EditRecipeForm';
-import { AxiosWithAuth } from './utils/axiosWithAuth';
+import { axiosWithAuth } from './utils/axiosWithAuth';
 
 const initialRecipes = [];
 
 function App() {
   const [recipes, setRecipes] = useState(initialRecipes);
   const getRecipes = () => {
-    //get request here to get recipes from the back-end and set them to state
+      axiosWithAuth().get('/recipes')
+        .then(res => {
+          console.log(res.data);
+          setRecipes(res.data);
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
   };
 
   useEffect(() => {
@@ -35,8 +45,8 @@ function App() {
                 path="/recipes/:id/edit"
                 component={EditRecipeForm}
               />
-              {/* Route to the sign-in page */}
-              {/* Route to the sign-up page */}
+              <Route path='/signup' component={SignUpForm}/>
+              <Route path='/signin' component={SignInForm}/>
               {/* Add PrivateRoute to below once token is being passed */}
               <Route exact path="/" component={RecipeList} />
             </Switch>

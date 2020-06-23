@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import axios from'axios';
 
     //you know
-// import * as Yup from 'yup';
+import * as Yup from 'yup';
+import signUpFormSchema from './YupValidation/signUpFormSchema';
 
 const initialFormValues = {
     first_name: '',
@@ -11,7 +13,6 @@ const initialFormValues = {
     username: '',
     email: '',
     password: '',
-    tos: false,
   };
 
   const initialFormErrors = {
@@ -20,7 +21,6 @@ const initialFormValues = {
     username: '',
     email: '',
     password: '',
-    tos: false,
   };
 
 export default function SignUpForm() {
@@ -29,101 +29,89 @@ export default function SignUpForm() {
     const [formErrors, setFormErrors] = useState(initialFormErrors);
     const [disabled, setDisabled] = useState(true);
 
+    let history = useHistory();
+
     const onInputChange = evt => {
     
         const { name, value } = evt.target
     
             // For Validation later
-        // Yup
-        //   .reach(formSchema, name)
+        Yup
+          .reach(signUpFormSchema, name)
     
-        //   .validate(value)
+          .validate(value)
     
-        //   .then(() => {
-        //     setFormErrors({
-        //       ...formErrors,
-        //       [name]: ""
-        //     })
-        //   })
-        //   .catch(err => {
-        //     setFormErrors({
-        //       ...formErrors,
-        //       [name]: err.errors[0]
-        //     })
-        //   })
+          .then(() => {
+            setFormErrors({
+              ...formErrors,
+              [name]: ""
+            })
+          })
+          .catch(err => {
+            setFormErrors({
+              ...formErrors,
+              [name]: err.errors[0]
+            })
+          })
     
-        // setFormValues({
-        //   ...formValues,
-        //   [name]: value
-        // })
-      };
-
-    const onCheckboxChange = evt => {
         setFormValues({
           ...formValues,
-          tos: !formValues.tos
+          [name]: value
         })
-      };
+    };
 
 
       // This is my generic post request, not sure how I'll be using it yet, or if it's for you.
-    // const postUsers = newUser => {
-    //     axios.post('', newUser)
-    //       .then(response => {
-    //         setUsers([response.data, ...users]);
-    //         debugger
-    //       })
-    //       .catch(err => {
-    //         console.log(err)
-    //       })
-    //       .finally(() => {
-    //         setFormValues(initialFormValues);
-    //       })
-    //   };
+    const postUser = newUser => {
+        axios.post('https://secret-family-recipes-6.herokuapp.com/auth/register', newUser)
+          .then(response => {
+            history.push('/signin')
+          })
+          .catch(err => {
+            console.log(err)
+          })
+          .finally(() => {
+            setFormValues(initialFormValues);
+          })
+    };
       
 
     // Same thing as for the post request
-//   const onSubmit = evt => {
-//     evt.preventDefault();
+  const onSubmit = evt => {
+    evt.preventDefault();
 
-//     const newUser = {
-//       first_name: formValues.first_name.trim(),
-//       last_name: formValues.last_name.trim(),
-//       username: formValues.username.trim(),
-//       email: formValues.email.trim(),
-//       password: formValues.password,
-//       tos: formValues.tos,
-//     };
+    const newUser = {
+      first_name: formValues.first_name.trim(),
+      last_name: formValues.last_name.trim(),
+      username: formValues.username.trim(),
+      email: formValues.email.trim(),
+      password: formValues.password,
+    };
 
-//     setUsers(props => [newUser, ...props]);
-
-//     setFormValues(initialFormValues);
-
-//     postUsers(newUser);
-//   };
+    postUser(newUser);
+  };
 
       // This is to refresh the formValues for validation later
-//   useEffect(() => {
+  useEffect(() => {
 
-//     formSchema.isValid(formValues).then(props => {
-//       setDisabled(!props)
-//     })
-//   }, [formValues]);
+    signUpFormSchema.isValid(formValues).then(props => {
+      setDisabled(!props)
+    })
+  }, [formValues]);
 
 
 
   return (
     <div className="form-container">
-        {/* <div className='errors'>
-            <div>{formErrors.first_name}</div>
-            <div>{formErrors.last_name}</div>
-            <div>{formErrors.username}</div>
-            <div>{formErrors.email}</div>
-            <div>{formErrors.password}</div>
-            <div>{formErrors.tos}</div>
-        </div> */}
+        <h3>Sign Up</h3>
         <div className='form-input'>
-            <h3>Sign Up</h3>
+            <div className='errors'>
+                <div>{formErrors.first_name}</div>
+                <div>{formErrors.last_name}</div>
+                <div>{formErrors.username}</div>
+                <div>{formErrors.email}</div>
+                <div>{formErrors.password}</div>
+                </div>
             <label> First Name
                 <input name='first_name' type='text' value={formValues.first_name} onChange={onInputChange} maxLength='40'/>
             </label>
@@ -138,9 +126,6 @@ export default function SignUpForm() {
             </label>
             <label> Password
                 <input name='password' type='password' value={formValues.password} onChange={onInputChange}/>
-            </label>
-            <label> Terms of Service
-                <input name='tos' type='checkbox' checked={formValues.tos} onChange={onCheckboxChange}/>
             </label>
             <button onClick={onSubmit} disabled={disabled}>Submit</button>
         </div>
