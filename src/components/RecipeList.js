@@ -11,13 +11,10 @@ export default function RecipeList() {
       <h2>Recipe List</h2>
       <SearchBar />
       <div className="all-cards">
-        {/* map through the recipe data, imported via context */}
-        <Recipe />
-        <Recipe />
-        <Recipe />
-        <Recipe />
-        <Recipe />
-        <Recipe />
+      {recipes.map(recipe => {
+        return (
+      <Recipe key={recipe.id} category={recipe.category} recipe_img={recipe.recipe_img} source = {recipe.source} title = {recipe.title}/>
+      )})};
       </div>
     </div>
   );
