@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Open+Sans&display=swap');
+
+h2 {
+  font-size: 2.4rem;
+  font-family: 'Montserrat', sans-serif;
+  color: #f3e1ab;
+  padding: 0.5rem 0;
+
+  text-shadow: 2px 2px 2px black;
+}
+
+.search {
+  display: flex;
+  justify-content: center;
+
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-size: 1.1rem;
+}
+
+input {
+  width: 250px;
+  font-size: 0.9rem;
+}
+
+.all-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.recipe-card {
+  background-color: #f3e1ab;
+  font-family: 'Open Sans', sans-serif;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #703103;
+  padding: 10px;
+  border: 2px solid #703103;
+  margin: 10px;
+}
+
+.recipe-card img {
+  max-width: 240px;
+}
+
+.recipe-card h3 {
+  padding: 5px 0;
+}
