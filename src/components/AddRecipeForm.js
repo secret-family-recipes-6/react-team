@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import './Forms.css';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 const initialFormValues = {
   title: '',
@@ -12,6 +14,7 @@ const initialFormValues = {
 
 export default function AddRecipeForm() {
   const [formValues, setFormValues] = useState(initialFormValues);
+  const history = useHistory();
   const onInputChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
@@ -21,15 +24,15 @@ export default function AddRecipeForm() {
   const onSubmit = (event) => {
     event.preventDefault();
     console.log(formValues);
-    // axiosWithAuth()
-    //   .post(`/recipes`, formValues)
-    //   .then((res) => {
-    //     console.log('new recipe submitted');
-    //     history.push(`/recipes/${res.data (id returned??) }`);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axiosWithAuth()
+      .post(`/recipes`, formValues)
+      .then((res) => {
+        console.log('new recipe submitted', res.data);
+        history.push(`/recipes/${res.data.id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (

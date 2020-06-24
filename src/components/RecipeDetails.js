@@ -2,9 +2,10 @@ import React, { useEffect, useContext } from 'react';
 import { useParams, useHistory } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
 import './RecipeList.css';
+import { axiosWithAuth } from '../utils/axiosWithAuth';
 
 export default function RecipeDetails() {
-  const { getRecipe, currentRecipe, setCurrentRecipe } = useContext(
+  const { getRecipe, currentRecipe, setCurrentRecipe, getRecipes } = useContext(
     RecipesContext
   );
   const params = useParams();
@@ -13,6 +14,19 @@ export default function RecipeDetails() {
   useEffect(() => {
     getRecipe(params.id);
   }, [params.id]);
+
+  const deleteRecipe = (id) => {
+    axiosWithAuth()
+      .delete(`/recipes/${id}`)
+      .then((res) => {
+        getRecipes();
+        console.log('deleted', id);
+        history.push('/');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="recipe-details">
@@ -42,7 +56,9 @@ export default function RecipeDetails() {
             <h3>Instructions:</h3> <p>{currentRecipe.instructions}</p>
             <div className="buttons">
               <button>Edit Recipe</button>
-              <button>Delete Recipe</button>
+              <button onClick={() => deleteRecipe(params.id)}>
+                Delete Recipe
+              </button>
             </div>
           </div>
         </div>
