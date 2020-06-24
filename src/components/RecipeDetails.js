@@ -55,7 +55,11 @@ export default function RecipeDetails() {
           <div className="instructions">
             <h3>Instructions:</h3> <p>{currentRecipe.instructions}</p>
             <div className="buttons">
-              <button>Edit Recipe</button>
+              <button
+                onClick={() => history.push(`/recipes/${params.id}/edit`)}
+              >
+                Edit Recipe
+              </button>
               <button onClick={() => deleteRecipe(params.id)}>
                 Delete Recipe
               </button>
