@@ -70,9 +70,6 @@ export default function SignUpForm() {
       })
       .catch((err) => {
         console.log(err);
-      })
-      .finally(() => {
-        setFormValues(initialFormValues);
       });
   };
 
@@ -99,7 +96,7 @@ export default function SignUpForm() {
   }, [formValues]);
 
   return (
-    <div className="form-container">
+    <form className="form-container">
       <h3>Sign Up</h3>
       <div className="form-input">
         <div className="errors">
@@ -144,7 +141,7 @@ export default function SignUpForm() {
         </label>
         <label>
           {' '}
-          Email
+          Email:
           <input
             name="email"
             type="text"
@@ -154,7 +151,7 @@ export default function SignUpForm() {
         </label>
         <label>
           {' '}
-          Password
+          Password:
           <input
             name="password"
             type="password"
@@ -166,6 +163,6 @@ export default function SignUpForm() {
           Submit
         </button>
       </div>
-    </div>
+    </form>
   );
 }

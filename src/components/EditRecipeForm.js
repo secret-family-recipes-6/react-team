@@ -67,7 +67,7 @@ export default function EditRecipeForm() {
   }, [formValues]);
 
   return (
-    <form onSubmit={onSubmit} className="update">
+    <form onSubmit={onSubmit}>
       <h2>Update {currentRecipe.title}</h2>
 
       <label>
