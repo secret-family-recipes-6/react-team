@@ -1,8 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Forms.css';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import { RecipesContext } from '../contexts/RecipesContext';
+import * as Yup from 'yup';
+import addRecipeFormSchema from './YupValidation/addRecipeFormSchema';
 
 const initialFormValues = {
   title: '',
@@ -16,11 +18,35 @@ const initialFormValues = {
 export default function AddRecipeForm() {
   const { getRecipes } = useContext(RecipesContext);
   const [formValues, setFormValues] = useState(initialFormValues);
+  const [formErrors, setFormErrors] = useState(initialFormValues);
+  const [disabled, setDisabled] = useState(true);
   const history = useHistory();
+  
   const onInputChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
-    setFormValues({ ...formValues, [name]: value });
+    
+    Yup.reach(addRecipeFormSchema, name)
+
+      .validate(value)
+
+      .then(() => {
+        setFormErrors({
+          ...formErrors,
+          [name]: '',
+        });
+      })
+      .catch((err) => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0],
+        });
+      });
+
+    setFormValues({
+      ...formValues,
+      [name]: value,
+    });
   };
 
   const onSubmit = (event) => {
@@ -36,6 +62,12 @@ export default function AddRecipeForm() {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    addRecipeFormSchema.isValid(formValues).then((props) => {
+      setDisabled(!props);
+    });
+  }, [formValues]);
 
   return (
     <form onSubmit={onSubmit} className="update">
@@ -110,7 +142,7 @@ export default function AddRecipeForm() {
         />
       </label>
 
-      <button>Submit</button>
+      <button onClick={onSubmit} disabled={disabled}>Submit</button>
     </form>
   );
 }
