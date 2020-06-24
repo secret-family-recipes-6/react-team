@@ -11,10 +11,17 @@ export default function RecipeList() {
       <h2>Recipe List</h2>
       <SearchBar />
       <div className="all-cards">
-      {recipes.map(recipe => {
-        return (
-      <Recipe key={recipe.id} category={recipe.category} recipe_img={recipe.recipe_img} source = {recipe.source} title = {recipe.title}/>
-      )})};
+        {recipes.map((recipe) => {
+          return (
+            <Recipe
+              key={recipe.id}
+              category={recipe.category}
+              recipe_img={recipe.recipe_img}
+              title={recipe.title}
+              id={recipe.id}
+            />
+          );
+        })}
       </div>
     </div>
   );
