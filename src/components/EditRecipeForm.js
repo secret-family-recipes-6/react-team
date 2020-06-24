@@ -91,7 +91,6 @@ export default function EditRecipeForm() {
           type="text"
           name="recipe_img"
           placeholder="..."
-          maxLength="100"
           value={formValues.recipe_img}
           onChange={onInputChange}
         />

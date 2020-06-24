@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import './Forms.css';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
+import { RecipesContext } from '../contexts/RecipesContext';
 
 const initialFormValues = {
   title: '',
@@ -13,6 +14,7 @@ const initialFormValues = {
 };
 
 export default function AddRecipeForm() {
+  const { getRecipes } = useContext(RecipesContext);
   const [formValues, setFormValues] = useState(initialFormValues);
   const history = useHistory();
   const onInputChange = (event) => {
@@ -27,7 +29,7 @@ export default function AddRecipeForm() {
     axiosWithAuth()
       .post(`/recipes`, formValues)
       .then((res) => {
-        console.log('new recipe submitted', res.data);
+        getRecipes();
         history.push(`/recipes/${res.data.id}`);
       })
       .catch((err) => {
@@ -81,7 +83,6 @@ export default function AddRecipeForm() {
           type="text"
           name="recipe_img"
           placeholder="..."
-          maxLength="100"
           value={formValues.recipe_img}
           onChange={onInputChange}
         />
