@@ -3,7 +3,7 @@ import * as Yup from "yup";
 const editRecipeFormSchema = Yup.object().shape({
   title: Yup
     .string()
-    .required("Username is Required."),
+    .required("The title is Required."),
   source: Yup
     .string()
     .required("The source is Required"),
