@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
+import './Forms.css';
 
 import axios from 'axios';
 
