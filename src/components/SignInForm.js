@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { RecipesContext } from '../contexts/RecipesContext';
+import './Forms.css';
 
 import axios from 'axios';
 
@@ -56,17 +57,13 @@ export default function SignUpForm() {
     axios
       .post('https://secret-family-recipes-6.herokuapp.com/auth/login', user)
       .then((res) => {
-        console.log(res);
         localStorage.setItem('token', res.data.token);
         setAuth(true);
         getRecipes();
         history.push('/');
       })
       .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setFormValues(initialFormValues);
+        alert(err.response.data.message);
       });
   };
 
@@ -95,7 +92,7 @@ export default function SignUpForm() {
   }, [formValues]);
 
   return (
-    <div className="form-container">
+    <form className="form-container">
       <div className="errors">
         <div>{formErrors.username}</div>
         <div>{formErrors.password}</div>
@@ -104,7 +101,7 @@ export default function SignUpForm() {
         <h3>Sign In</h3>
         <label>
           {' '}
-          Username
+          Username:
           <input
             name="username"
             type="text"
@@ -115,7 +112,7 @@ export default function SignUpForm() {
         </label>
         <label>
           {' '}
-          Password
+          Password:
           <input
             name="password"
             type="password"
@@ -123,10 +120,12 @@ export default function SignUpForm() {
             onChange={onInputChange}
           />
         </label>
-        <button onClick={onSubmit} disabled={disabled}>Sign In</button>
+        <button onClick={onSubmit} disabled={disabled}>
+          Sign In
+        </button>
       </div>
-      <p>New Here? Click to Register</p>
-      <button onClick={toSignUp}>Register Here</button>
-    </div>
+      <p>New Here?</p>
+      <button onClick={toSignUp}>Register</button>
+    </form>
   );
 }

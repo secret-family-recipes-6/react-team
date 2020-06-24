@@ -16,7 +16,7 @@ h2 {
 
 .search h3 {
   font-size: 1.1rem;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 
 input {
@@ -141,4 +141,8 @@ p {
 .title-bar {
   display: flex;
   justify-content: space-evenly;
+}
+
+.recipe-list button {
+  margin: 0 0 10px;
 }
