@@ -24,7 +24,6 @@ function App() {
     axiosWithAuth()
       .get('/recipes')
       .then((res) => {
-        console.log(res.data);
         setRecipes(res.data);
       })
       .catch((err) => {
@@ -44,14 +43,13 @@ function App() {
   };
 
   const toRecipeDetails = (id) => {
-    console.log('clicked on', id);
     getRecipe(id);
     history.push(`/recipes/${id}`);
   };
 
   useEffect(() => {
     getRecipes();
-  }, [recipes]);
+  }, []);
 
   return (
     <RecipesContext.Provider
@@ -72,11 +70,15 @@ function App() {
         <main>
           <div className="main-content">
             <Switch>
-              <PrivateRoute path="/recipes/:id" component={RecipeDetails} />
               <PrivateRoute path="/add-recipe" component={AddRecipeForm} />
               <PrivateRoute
                 path="/recipes/:id/edit"
                 component={EditRecipeForm}
+              />
+              <PrivateRoute
+                exact
+                path="/recipes/:id"
+                component={RecipeDetails}
               />
               <Route path="/signup" component={SignUpForm} />
               <Route path="/signin" component={SignInForm} />

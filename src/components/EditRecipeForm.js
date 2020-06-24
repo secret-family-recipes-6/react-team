@@ -3,7 +3,7 @@ import { RecipesContext } from '../contexts/RecipesContext';
 import { useHistory, useParams } from 'react-router-dom';
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 import * as Yup from 'yup';
-import editRecipeFormSchema from './YupValidation/editRecipeFormSchema'
+import editRecipeFormSchema from './YupValidation/editRecipeFormSchema';
 
 const initialFormValues = {
   title: '',
@@ -16,9 +16,9 @@ const initialFormValues = {
 
 export default function EditRecipeForm() {
   const { currentRecipe } = useContext(RecipesContext);
-  const [formValues, setFormValues] = useState(initialFormValues);
   const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
+  const [formValues, setFormValues] = useState({ ...currentRecipe });
   const history = useHistory();
   const { id } = useParams();
 
@@ -48,25 +48,16 @@ export default function EditRecipeForm() {
     });
   };
 
-  useEffect(
-    (currentRecipe) => {
-      setFormValues({ ...currentRecipe });
-    },
-    [id]
-  );
-
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues);
-    // axiosWithAuth()
-    //   .put(`/recipes/${id}`, formValues)
-    //   .then((res) => {
-    //     console.log('edit submitted');
-    //     history.push(`/recipes/${id}`);
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    axiosWithAuth()
+      .put(`/recipes/${id}`, formValues)
+      .then((res) => {
+        history.push(`/recipes/${id}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -148,7 +139,9 @@ export default function EditRecipeForm() {
         />
       </label>
 
-      <button onClick={onSubmit} disabled={disabled}>Submit</button>
+      <button onClick={onSubmit} disabled={disabled}>
+        Submit
+      </button>
     </form>
   );
 }

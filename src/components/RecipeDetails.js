@@ -20,7 +20,6 @@ export default function RecipeDetails() {
       .delete(`/recipes/${id}`)
       .then((res) => {
         getRecipes();
-        console.log('deleted', id);
         history.push('/');
       })
       .catch((err) => {

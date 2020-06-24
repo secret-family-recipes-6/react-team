@@ -56,7 +56,6 @@ export default function SignUpForm() {
     axios
       .post('https://secret-family-recipes-6.herokuapp.com/auth/login', user)
       .then((res) => {
-        console.log(res);
         localStorage.setItem('token', res.data.token);
         setAuth(true);
         getRecipes();

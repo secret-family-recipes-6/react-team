@@ -21,11 +21,11 @@ export default function AddRecipeForm() {
   const [formErrors, setFormErrors] = useState(initialFormValues);
   const [disabled, setDisabled] = useState(true);
   const history = useHistory();
-  
+
   const onInputChange = (event) => {
     const { name } = event.target;
     const { value } = event.target;
-    
+
     Yup.reach(addRecipeFormSchema, name)
 
       .validate(value)
@@ -51,7 +51,6 @@ export default function AddRecipeForm() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    console.log(formValues);
     axiosWithAuth()
       .post(`/recipes`, formValues)
       .then((res) => {
@@ -142,7 +141,9 @@ export default function AddRecipeForm() {
         />
       </label>
 
-      <button onClick={onSubmit} disabled={disabled}>Submit</button>
+      <button onClick={onSubmit} disabled={disabled}>
+        Submit
+      </button>
     </form>
   );
 }
