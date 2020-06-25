@@ -18,6 +18,7 @@ function App() {
   const [recipes, setRecipes] = useState(initialRecipes);
   const [currentRecipe, setCurrentRecipe] = useState({});
   const [auth, setAuth] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
   const history = useHistory();
 
   const getRecipes = () => {
@@ -63,6 +64,8 @@ function App() {
         toRecipeDetails,
         auth,
         setAuth,
+        searchValue,
+        setSearchValue,
       }}
     >
       <div className="App">
