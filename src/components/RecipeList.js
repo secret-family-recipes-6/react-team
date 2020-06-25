@@ -6,7 +6,7 @@ import { RecipesContext } from '../contexts/RecipesContext';
 import { useHistory } from 'react-router-dom';
 
 export default function RecipeList() {
-  const { recipes } = useContext(RecipesContext);
+  const { recipes, searchValue } = useContext(RecipesContext);
   const history = useHistory();
   return (
     <div className="recipe-list">
@@ -16,17 +16,25 @@ export default function RecipeList() {
       </button>
       <SearchBar />
       <div className="all-cards">
-        {recipes.map((recipe) => {
-          return (
-            <Recipe
-              key={recipe.id}
-              category={recipe.category}
-              recipe_img={recipe.recipe_img}
-              title={recipe.title}
-              id={recipe.id}
-            />
-          );
-        })}
+        {recipes
+          .filter(
+            (recipe) =>
+              recipe.category
+                .toLowerCase()
+                .includes(searchValue.toLowerCase()) ||
+              recipe.title.toLowerCase().includes(searchValue.toLowerCase())
+          )
+          .map((recipe) => {
+            return (
+              <Recipe
+                key={recipe.id}
+                category={recipe.category}
+                recipe_img={recipe.recipe_img}
+                title={recipe.title}
+                id={recipe.id}
+              />
+            );
+          })}
       </div>
     </div>
   );

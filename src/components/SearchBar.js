@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { RecipesContext } from '../contexts/RecipesContext';
 
 export default function SearchBar() {
-  const [searchValue, setSearchValue] = useState('');
+  const { searchValue, setSearchValue } = useContext(RecipesContext);
 
   const onInputChange = (event) => {
     const { value } = event.target;

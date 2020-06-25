@@ -69,7 +69,7 @@ export default function SignUpForm() {
         history.push('/signin');
       })
       .catch((err) => {
-        console.log(err);
+        alert(err.response.data.message);
       });
   };
 
